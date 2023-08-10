@@ -9,8 +9,8 @@ URL = "https://www.linkedin.com/jobs/search/?currentJobId=3687871543&f_LF=f_AL&g
       "%20developer&location=Poland&refresh=true "
 chrome_driver_path = "C:/chromedriver.exe"
 
-USERNAME = "boukhedenna.nedjm@gmail.com"
-PASSWORD = "Nedjm@2021!"
+USERNAME = ""
+PASSWORD = ""
 
 
 def save_job_and_follow_company():
