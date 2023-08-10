@@ -1,0 +1,42 @@
+/*********************************TAG SELECTORS*********************************/
+body {
+    background-color: #ECE8DD;
+}
+
+h1 {
+    color: red;
+    font-size: 46px;
+}
+
+p {
+    color: #DC0000;
+}
+
+/*
+img {
+    background-color: red;
+}
+*/
+
+
+img:hover {
+    background-color: yellow;
+}
+
+/********************************CLASS SELECTORS********************************/
+/*multiple objects can have the same class, and an object can have multiple classes*/
+.bacon{
+    background-color: green;
+}
+
+.broccoli{
+    background-color: red;
+}
+
+/**********************************ID SELECTORS**********************************/
+/*ID is specific to one object and can not be duplicated*/
+#heading {
+    color: #850000;
+}
+
+/*ids selectors are more specific than class and tag selectors, they overwrite them*/

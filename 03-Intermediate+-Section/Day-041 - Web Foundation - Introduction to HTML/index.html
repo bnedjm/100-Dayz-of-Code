@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <center>
+    <hr size="3" noshade>
+      <!-- h1...h6 are not self-closing tags. Thus,
+      they require a START tag as well as an END tag -->
+    <h1>The Adventures of<br>Sherlock Holmes</h1>
+    <br>
+    <h4>by</h4>
+    <h3>Arthur Conan Doyle</h3>
+      <!-- <hr>:horizontal space, is a self-closing tag
+      same as <br>:new line cmd -->
+    <hr size="3" noshade>
+      <!-- this is an explanatory example on headings' levels -->
+      <h1>Heading level 1</h1>
+      <h2>Heading level 2</h2>
+      <h3>Heading level 3</h3>
+      <h4>Heading level 4</h4>
+      <h5>Heading level 5</h5>
+      <h6>Heading level 6</h6>
+
+    <!-- it is good practice to use <em> instead of <i> to make text italic
+    The HTML <em> element defines emphasized text which provides more infos
+    than the HTML <i> element which only makes the text italic -->
+
+    <i>text that we want to display italic</i>
+    <em>text that we want to emphasize</em>
+
+    <!-- Also, <strong>:more info, instead of <b>:only style -->
+
+    <!--  to redirect people to a website using hyperlinks we use the <a></a> tag-->
+    <!--  the formula is <a href="link to the website">the display text for the link</a>-->
+    <a href="https://www.put.poznan.pl/">Poznan University of Technology</a>
+
+<!--    in addition to urls we can refer to an html file in our local host-->
+    <a href="contact_me.html">Contact Me</a>
+
+<!--    in order to create a list of items we use : <ul></ul> for unordered lists and <ol></ol> for ordered lists-->
+<!--    both types of lists support nesting and mixed-nesting, you can nest <ul></ul> in <ol></ol> and vice versa-->
+<!--    -->
+<!--    list samples -->
+<!--    unordered-->
+    <ul>
+      <li>list items list items</li>
+      <li>list items list items</li>
+    </ul>
+<!--    ordered-->
+    <ol>
+      <li>list items list items</li>
+      <li>list items list items</li>
+    </ol>
+<!--    nested lists-->
+    <ul>
+      <ol>
+        <li>list items list items</li>
+        <li>list items list items</li>
+        <li>list items list items</li>
+      </ol>
+    </ul>
+
+<!--    tables-->
+<!--    we can create tables using <table></table>, and we use <thead><th></th></thead> to set the table headers-->
+<!--    in a specific table head section. to fill the table body we use <tbody></tbody> and inside we specify rows and-->
+<!--    columns using <tr></tr> for rows and inside of it we use <td></td> for each column.-->
+
+<!--    we can specify the borders by using a table attribute called "border="thickness""-->
+<!--    without the border attribute there will be no border visible but the alignment will be maintained -->
+    <table border="2">
+<!--      table headers -->
+      <thead>
+        <th>table header</th>
+        <th>table header</th>
+      </thead>
+<!--      table body-->
+      <tbody>
+<!--      table row-->
+        <tr>
+<!--          table column-->
+          <td>column 0.0</td>
+          <td>column 0.1</td>
+        </tr>
+      </tbody>
+    </table>
+  </center>
+</html>
