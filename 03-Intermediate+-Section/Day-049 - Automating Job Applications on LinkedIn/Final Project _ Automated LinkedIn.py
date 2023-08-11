@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -13,8 +13,36 @@ USERNAME = "boukhedenna.nedjm@gmail.com"
 PASSWORD = "Nedjm@2021!"
 
 
-def save_job_and_follow_company():
-    pass
+def save_job():
+        try:
+            save_button = driver.find_element(By.CSS_SELECTOR, value=".jobs-save-button")
+            # save_button = driver.find_element(By.LINK_TEXT, value="Save")
+            # saved = save_button.find_element(By.TAG_NAME, value="span")
+            try:
+                saved = save_button.find_element(By.LINK_TEXT, value="Save")
+            except NoSuchElementException or StaleElementReferenceException:
+                print("Saved already!")
+            else:
+                save_button.click()
+        except NoSuchElementException:
+            # pass
+            print("No Save Button!")
+        else:
+            save_button.click()
+
+            # if(saved.text == "Save"):
+            #     save_button.click()
+            # else:
+            #     pass  
+
+def follow_company():
+    company_link = driver.find_element(By.CSS_SELECTOR, value=".app-aware-link")
+    try:
+        pass
+    except NoSuchElementException:
+        pass
+    else:
+        pass
 
 
 # open LinkedIn
@@ -25,7 +53,7 @@ driver.maximize_window()
 
 # click sign in button
 time.sleep(2)
-sign_in_button = driver.find_element(By.XPATH, value="/html/body/div[3]/header/nav/div/a[2]")
+sign_in_button = driver.find_element(By.LINK_TEXT, value="Sign in")
 sign_in_button.click()
 
 # sign in
@@ -40,30 +68,18 @@ password.send_keys(Keys.RETURN)
 time.sleep(2)
 input("Click enter after CAPTCHA")
 
-# ---------------------------------------------------------#
-# save all jobs and follow the company that posted each of them
+# get list of jobs
 jobs_list = driver.find_element(by="xpath", value="//*[@id='main']/div/div[1]/div/ul")
 jobs = jobs_list.find_elements(by="tag name", value="a")
 
+# save job and follow company
 for job in jobs:
-    # print(job.get_attribute("outerHTML"))
+    time.sleep(2)
     job.click()
-    time.sleep(1)
-    try:
-        save_button = driver.find_element(By.CSS_SELECTOR, value=".jobs-save-button")
-        print(save_button.get_attribute("outerHTML"))
-    except NoSuchElementException:
-        try:
-            save_button = driver.find_element(By.XPATH, value="//*[@class='mt5']/div/button")
-        except NoSuchElementException:
-            continue
-        else:
-            save_button.click()
-            time.sleep(5)
-    else:
-        save_button.click()
-        time.sleep(5)
-# ---------------------------------------------------------#
+    time.sleep(2)
+    save_job()
+    # time.sleep(2)
+    # follow_company()
 
 # close browser after 5 sec from ENTER key press
 input()
