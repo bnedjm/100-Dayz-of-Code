@@ -1,6 +1,5 @@
 from selenium import webdriver
-from selenium.common import NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException
-from selenium.webdriver.chrome.service import Service
+from selenium.common import NoSuchElementException, ElementClickInterceptedException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
@@ -8,7 +7,7 @@ import os
 
 URL = "https://tinder.com/"
 CHROME_DRIVER_PATH = "C:/chromedriver.exe"
-PHONE_NUMBER = "729339635"
+PHONE_NUMBER = os.environ.get("PHONE_NUMBER")
 
 # open Tinder
 options = webdriver.ChromeOptions()
@@ -42,10 +41,10 @@ driver.find_element(By.XPATH, value="//*[@id='u-258887019']/main/div[1]/div/div/
 
 # hit like
 time.sleep(5)
-count = 0
-while count < 10:
+# count = 0
+for _ in range(100):
     time.sleep(2)
-    driver.find_element(By.ID, value="Tinder").send_keys(Keys.ARROW_LEFT)
+    driver.find_element(By.ID, value="Tinder").send_keys(Keys.ARROW_LEFT) # click left arrow - swipe left
     # try:
     #     like_button = driver.find_element(By.XPATH, value="//*[@id='u-258887019']/main/div[1]/div/div/div[3]/button[2]").click() # click not interested for notifications
     # except NoSuchElementException:
