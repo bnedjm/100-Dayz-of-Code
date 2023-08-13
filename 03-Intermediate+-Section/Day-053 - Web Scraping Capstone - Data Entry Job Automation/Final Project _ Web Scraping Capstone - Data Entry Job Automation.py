@@ -3,6 +3,8 @@ from selenium.common import NoSuchElementException, ElementClickInterceptedExcep
 from selenium.webdriver.common.by import By
 import time
 import os
+from bs4 import BeautifulSoup
+import requests
 
 
 CHROME_DRIVER_PATH = "C:/chromedriver.exe"
@@ -17,12 +19,32 @@ class DataEntry:
         options.add_experimental_option("detach", True)
         self.driver = webdriver.Chrome(chrome_options=options, executable_path=CDP)
         self.driver.maximize_window()
-        self.addresses = ["test"]
-        self.prices = ["test"]
-        self.links = ["test"]
+        self.addresses = []
+        self.prices = []
+        self.links = []
 
-    def get_rentals_data(self):
-        pass
+    def get_rentals_data_selenium(self): # using selenium
+        time.sleep(2)
+        self.driver.get(ZILLOW_SEARCH_URL)
+        time.sleep(10)
+        search_results = self.driver.find_elements(By.XPATH, value="//*[@id='grid-search-results']/ul/li")
+        for search_result in search_results:
+            self.addresses.append(search_result.find_elements(By.XPATH, value="//div/div/article/div/div[1]/a/address"))
+            price = search_result.find_elements(By.CSS_SELECTOR, value=".PropertyCardWrapper__StyledPriceLine-srp__sc-16e8gqd-1.iMKTKr").text.split(" ")[0]
+            self.prices.append(price.sub(r'[^0-9]', '', price))
+            self.links.append(f"https://www.zillow.com{search_result.find_elements(By.XPATH, value='//div/div/article/div/div[1]/a').get_attribute('href')}")
+            
+    def get_rentals_data_beautiful_soup(self): # using beautiful soup
+        response = requests.get(ZILLOW_SEARCH_URL)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        search_results = soup.find_all(name="li", class_="ListItem-c11n-8-84-3__sc-10e22w8-0 StyledListCardWrapper-srp__sc-wtsrtn-0 iCyebE gTOWtl")
+
+        for search_result in search_results:
+            self.addresses.append(search_result.get(name="address").getText())
+            price = search_result.get(name="span", class_="PropertyCardWrapper__StyledPriceLine-srp__sc-16e8gqd-1").getText().split(" ")[0]
+            self.prices.append(price.sub(r'[^0-9]', '', price))
+            self.links.append(f"https://www.zillow.com{search_result.get(name='a').getText()}")
 
     def fill_google_form(self):
         time.sleep(2)
@@ -40,34 +62,11 @@ class DataEntry:
             time.sleep(2)
             login_form = self.driver.find_element(By.ID, value="mG61Hd")
             login_form.submit() # submit
-            time.sleep(5)
-
-    # def find_followers(self):
-    #     time.sleep(2)
-    #     self.driver.get(f"{INSTAGRAM_URL}{INSTAGRAM_SIMILAR_ACCOUNT}")
-    #     time.sleep(10)
-    #     self.driver.find_element(By.XPATH, value="//li[2]/a").click() # click followers
-    #     time.sleep(2)
-    #     followers = int(self.driver.find_element(By.XPATH, value="//li[2]/a/span").get_attribute("title").replace(",", "")) # get number of followers
-    #     followers_popup = self.driver.find_element(By.XPATH, value="/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[2]")
-    #     for _ in range(int(followers/2)): # scroll up
-    #         time.sleep(2)
-    #         self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", followers_popup)
-
-    # def follow(self):
-    #     time.sleep(2)
-    #     follow_buttons = self.driver.find_elements(By.XPATH, value="//*[@class='_aano']/div[1]/div/div/div/div/div/div[3]/div/button")
-    #     for follow_button in follow_buttons:
-    #         time.sleep(2)
-    #         try:
-    #             follow_button.click() # click follow
-    #         except ElementClickInterceptedException: # in case, account is already followed
-    #             self.driver.find_element(By.XPATH, value="//button[text()='Cancel']").click() # click cancel unfollow
-    #             time.sleep(2)
-    #             follow_button.click()
+            time.sleep(10)
 
 
 bot = DataEntry(CHROME_DRIVER_PATH)
-bot.get_rentals_data()
-bot.fill_google_form()
-bot.driver.quit()
+# bot.get_rentals_data_selenium()
+bot.get_rentals_data_beautiful_soup()
+# bot.fill_google_form()
+# bot.driver.quit()
