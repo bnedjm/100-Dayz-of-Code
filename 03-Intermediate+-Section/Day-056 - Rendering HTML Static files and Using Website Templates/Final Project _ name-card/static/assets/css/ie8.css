@@ -7,7 +7,7 @@
 /* List */
 
 	ul.icons li a {
-		-ms-behavior: url("assets/js/PIE.htc");
+		-ms-behavior: url("static/assets/js/PIE.htc");
 	}
 
 		ul.icons li a:before {
@@ -18,11 +18,11 @@
 /* Main */
 
 	#main {
-		-ms-behavior: url("assets/js/PIE.htc");
+		-ms-behavior: url("static/assets/js/PIE.htc");
 	}
 
 		#main .avatar img {
-			-ms-behavior: url("assets/js/PIE.htc");
+			-ms-behavior: url("static/assets/js/PIE.htc");
 		}
 
 /* Footer */
