@@ -21,6 +21,13 @@ def about():
 def contact():
     return render_template("contact.html")
 
+@app.route("/posts/<int:id>")
+def posts(id):
+    for post in data:
+        if post["id"] == id:
+            read_more_post = post
+    return render_template("post.html", post=read_more_post)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
