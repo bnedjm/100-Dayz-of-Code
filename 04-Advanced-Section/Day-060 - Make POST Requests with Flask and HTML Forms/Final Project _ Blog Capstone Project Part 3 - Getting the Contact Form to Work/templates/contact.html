@@ -9,7 +9,11 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="page-heading">
+          {% if method == "GET": %}
           <h1>Contact Me</h1>
+          {% elif method == "POST": %}
+          <h1>Successfully sent message!</h1>
+          {% endif %}
           <span class="subheading">Have questions? I have answers.</span>
         </div>
       </div>
