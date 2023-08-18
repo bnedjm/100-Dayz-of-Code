@@ -1,11 +1,9 @@
-<!DOCTYPE HTML>
 
-<html>
-	<head>
-		<title>Login</title>
-	</head>
-	<body>
-        <div class="container">
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+	<div class="container">	
 		<h1>Login</h1>
         <!-- This is where our form will go. -->
 		<form method="POST" action="{{ url_for('login') }}" novalidate>
@@ -24,6 +22,5 @@
 			</p>
 			{{ form.submit }}
 		</form>
-        </div>
-	</body>
-</html>
+	</div>
+{% endblock %}
