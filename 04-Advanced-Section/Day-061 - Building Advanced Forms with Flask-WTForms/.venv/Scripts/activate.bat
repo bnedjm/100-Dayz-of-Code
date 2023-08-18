@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\boukh\OneDrive\Bureau\Study\Self_Dev\Python\100-Dayz-of-Code\03-Intermediate+-Section\Day-056 - Rendering HTML Static files and Using Website Templates\.venv
+set VIRTUAL_ENV=C:\Users\boukh\OneDrive\Bureau\Study\Self_Dev\Python\100-Dayz-of-Code\04-Advanced-Section\Day-061 - Building Advanced Forms with Flask-WTForms\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

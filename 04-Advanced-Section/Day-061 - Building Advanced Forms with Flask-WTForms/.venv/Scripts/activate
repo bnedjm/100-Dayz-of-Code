@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\boukh\OneDrive\Bureau\Study\Self_Dev\Python\100-Dayz-of-Code\03-Intermediate+-Section\Day-056 - Rendering HTML Static files and Using Website Templates\.venv"
+VIRTUAL_ENV="C:\Users\boukh\OneDrive\Bureau\Study\Self_Dev\Python\100-Dayz-of-Code\04-Advanced-Section\Day-061 - Building Advanced Forms with Flask-WTForms\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
