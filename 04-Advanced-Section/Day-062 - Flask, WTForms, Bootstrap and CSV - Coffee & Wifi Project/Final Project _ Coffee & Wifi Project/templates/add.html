@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 <!--Don't forget your import here-->
+{% from 'bootstrap5/form.html' import render_form %}
 {% block title %}Add A New Cafe{% endblock %}
 
 {% block content %}
@@ -10,8 +11,8 @@
       <h1>Add a new cafe into the database</h1>
 
       <!-- This is where your WTForm will go -->
-
-	  <p class="space-above"><a href="#">See all cafes</a></p>
+      {{ render_form(form, novalidate=True) }}
+	  <p class="space-above"><a href="{{ url_for('add_cafe') }}">See all cafes</a></p>
 
     </div>
   </div>

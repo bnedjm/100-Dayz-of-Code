@@ -2,7 +2,7 @@
 your web pages for the styles to be rendered. */
 
 body {
-background-color: #333;
+background-color: #212529;
 color: white;
 }
 
@@ -16,7 +16,7 @@ a {
   margin: 0;
   height: 100vh;
   color: white;
-  background-color: #333;
+  background-color: #212529;
 }
 
 .space-above {
