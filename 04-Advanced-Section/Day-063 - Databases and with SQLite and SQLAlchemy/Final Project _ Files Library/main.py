@@ -29,7 +29,7 @@ def add():
         book =      {
         "title": request.form['title'],
         "author": request.form['author'],
-        "rating": int(request.form['rating']),
+        "rating": float(request.form['rating']),
         }
         all_books.append(book)
         for books in all_books:
