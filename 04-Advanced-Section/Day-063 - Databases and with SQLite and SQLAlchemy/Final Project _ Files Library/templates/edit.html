@@ -1,0 +1,14 @@
+  </head>
+  <body>
+    <h1>Edit Rating</h1>
+    <form action="{{ url_for('edit', index=index) }}" method="POST">
+      <h3>Book name : {{ book.title }}</h3>
+      <h3>Book author: {{ book.author }}</h3>
+      <h3>Book current rating: {{ book.rating }}</h3>
+
+      <label>Rating</label>
+      <input type="number" min="0" max="10" step="0.1" name="new_rating"/>
+      <button type="submit">Add Rating</button>
+    </form>
+  </body>
+</html>
