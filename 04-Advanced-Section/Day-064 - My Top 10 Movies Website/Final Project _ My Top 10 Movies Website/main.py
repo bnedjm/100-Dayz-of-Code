@@ -84,9 +84,12 @@ class AddMovieForm(FlaskForm):
 
 @app.route("/")
 def home():
-    result = db.session.execute(db.select(Movie).order_by(Movie.ranking))
+    result = db.session.execute(db.select(Movie).order_by(Movie.rating))
     all_movies = result.scalars().all()
-    return render_template("index.html", movies=all_movies)
+    for i in range(len(all_movies)):
+        all_movies[i].ranking = len(all_movies) - i
+    db.session.commit()
+    return render_template("index.html", movies=all_movies[-10:])
 
 @app.route("/edit", methods=['GET', 'POST'])
 def edit():
@@ -133,9 +136,6 @@ def find():
         title=data["title"],
         year=data["release_date"].split("-")[0],
         description=data["overview"],
-        rating=None,
-        ranking=None,
-        review=None,
         img_url=f"https://image.tmdb.org/t/p/w500{data['poster_path']}"
         )
     db.session.add(new_movie)
