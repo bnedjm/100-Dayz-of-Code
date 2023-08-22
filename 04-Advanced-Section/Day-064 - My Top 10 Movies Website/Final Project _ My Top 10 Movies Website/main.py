@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired, Length
 import requests
+import os
 
 '''
 Red underlines? Install the required packages first: 
@@ -19,12 +20,21 @@ pip3 install -r requirements.txt
 This will install the packages from requirements.txt for this project.
 '''
 
+TOKEN = os.environ.get("TOKEN")
+API_KEY = os.environ.get("API_KEY")
+
+headers = {
+    "accept": "application/json",
+    "Authorization": f"Bearer {TOKEN}"
+    }
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///books-collection.db"
+Bootstrap5(app)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies.db"
 db = SQLAlchemy()
 db.init_app(app)
-Bootstrap5(app)
 
 class Movie(db.Model):
     __tablename__ = 'movies'
@@ -33,15 +43,10 @@ class Movie(db.Model):
     title = db.Column(db.String(250), unique=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(500), nullable=False)
-    rating = db.Column(db.Float, nullable=False)
-    ranking = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.String(250), nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    ranking = db.Column(db.Integer, nullable=True)
+    review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
-
-class RateMovieForm(FlaskForm):
-    rating = FloatField(label='Your rating out of 10', validators=[DataRequired()])
-    review = StringField(label='Your review', validators=[DataRequired(), Length(max=250)])
-    submit = SubmitField(label='Done')
 
 with app.app_context():
     db.create_all()
@@ -68,6 +73,14 @@ with app.app_context():
     # db.session.add(second_movie)
     # db.session.commit()
 
+class RateMovieForm(FlaskForm):
+    rating = FloatField(label='Your rating out of 10', validators=[DataRequired()])
+    review = StringField(label='Your review', validators=[DataRequired(), Length(max=250)])
+    submit = SubmitField(label='Done')
+
+class AddMovieForm(FlaskForm):
+    title = StringField(label='Movie title', validators=[DataRequired(), Length(max=250)])
+    submit = SubmitField(label='Add Movie')
 
 @app.route("/")
 def home():
@@ -92,6 +105,43 @@ def delete():
     db.session.delete(movie_to_delete)
     db.session.commit()
     return redirect(url_for("home"))
+
+@app.route("/add", methods=['GET', 'POST'])
+def add():
+    form = AddMovieForm()
+    if form.validate_on_submit():
+        response = requests.get(
+            url="https://api.themoviedb.org/3/search/movie", 
+            params={"api_key": API_KEY, "query": form.title.data}
+            )
+        response.raise_for_status()
+        data = response.json()["results"]
+        return render_template("select.html", results=data)        
+    return render_template("add.html", form=form)
+
+@app.route("/find")
+def find():
+    movie_id = request.args.get("id")
+    movies_details_url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    response = requests.get(
+        url=movies_details_url, 
+        params={"api_key": API_KEY, "language": "en-US"}
+        )
+    response.raise_for_status()
+    data = response.json()
+    new_movie = Movie(
+        title=data["title"],
+        year=data["release_date"].split("-")[0],
+        description=data["overview"],
+        rating=None,
+        ranking=None,
+        review=None,
+        img_url=f"https://image.tmdb.org/t/p/w500{data['poster_path']}"
+        )
+    db.session.add(new_movie)
+    db.session.commit()
+    index = db.session.execute(db.select(Movie.id).where(Movie.title==new_movie.title)).scalar()
+    return redirect(url_for("edit", index=index))
 
 
 if __name__ == '__main__':
