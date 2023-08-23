@@ -37,6 +37,8 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+    def dictify(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
 with app.app_context():
     db.create_all()
@@ -52,23 +54,24 @@ def home():
 def random():
     all_cafes = db.session.execute(db.select(Cafe)).scalars().all()
     random_cafe = choice(all_cafes)
-    return jsonify(
-        cafe = {
-            # "id": random_cafe.id,
-            "name": random_cafe.name,
-            "img_url": random_cafe.img_url,
-            "location": random_cafe.location,
-            "map_url": random_cafe.map_url,   
-            "amenities": {
-                "can_take_calls": random_cafe.can_take_calls,
-                "has_sockets": random_cafe.has_sockets,
-                "has_toilet": random_cafe.has_toilet,
-                "has_wifi": random_cafe.has_wifi,
-                "seats": random_cafe.seats,
-                "coffee_price": random_cafe.coffee_price
-            }
-            }
-        )
+    # return jsonify(
+    #     cafe = {
+    #         # "id": random_cafe.id,
+    #         "name": random_cafe.name,
+    #         "img_url": random_cafe.img_url,
+    #         "location": random_cafe.location,
+    #         "map_url": random_cafe.map_url,   
+    #         "amenities": {
+    #             "can_take_calls": random_cafe.can_take_calls,
+    #             "has_sockets": random_cafe.has_sockets,
+    #             "has_toilet": random_cafe.has_toilet,
+    #             "has_wifi": random_cafe.has_wifi,
+    #             "seats": random_cafe.seats,
+    #             "coffee_price": random_cafe.coffee_price
+    #         }
+    #         }
+    #     )
+    return jsonify(cafe=random_cafe.dictify())
 
 ## HTTP POST - Create Record
 
