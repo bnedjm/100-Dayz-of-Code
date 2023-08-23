@@ -106,8 +106,7 @@ def add():
         )
     db.session.add(new_cafe)
     db.session.commit()
-    message = {"success": "Successfully added the new cafe"}, 201
-    return jsonify(response=message)
+    return jsonify(response={"success": "Successfully added the new cafe"}), 201
 
 ## HTTP PUT/PATCH - Update Record
 
