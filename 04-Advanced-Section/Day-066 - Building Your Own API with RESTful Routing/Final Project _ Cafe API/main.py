@@ -76,10 +76,18 @@ def random():
 @app.route("/all", methods=['GET']) # type: ignore
 def all():
     all_cafes = db.session.execute(db.select(Cafe)).scalars().all()
-    cafes = []
-    for cafe in all_cafes:
-        cafes.append(cafe.dictify())
-    return jsonify(cafes=cafes)
+    return jsonify(cafes=[cafe.dictify() for cafe in all_cafes])
+
+@app.route("/search") # type: ignore
+def search():
+    all_cafes = db.session.execute(db.select(Cafe).where(Cafe.location==request.args.get("loc"))).scalars().all()
+    error = {"Not Found": "Sorry, we don't have a cafe at that location"}
+    if len(all_cafes) == 0:
+        return jsonify(error=error)
+    elif len(all_cafes) == 1:
+        return jsonify(cafe=all_cafes[0].dictify())
+    else:
+        return jsonify(cafes=[cafe.dictify() for cafe in all_cafes])
 
 ## HTTP POST - Create Record
 
