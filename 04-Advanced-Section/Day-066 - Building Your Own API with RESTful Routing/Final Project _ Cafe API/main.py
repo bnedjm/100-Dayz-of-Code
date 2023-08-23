@@ -71,23 +71,22 @@ def random():
     #         }
     #         }
     #     )
-    return jsonify(cafe=random_cafe.dictify())
+    return jsonify(cafe=random_cafe.dictify()), 200
 
 @app.route("/all", methods=['GET']) # type: ignore
 def all():
     all_cafes = db.session.execute(db.select(Cafe)).scalars().all()
-    return jsonify(cafes=[cafe.dictify() for cafe in all_cafes])
+    return jsonify(cafes=[cafe.dictify() for cafe in all_cafes]), 200
 
 @app.route("/search", methods=['GET']) # type: ignore
 def search():
     all_cafes = db.session.execute(db.select(Cafe).where(Cafe.location==request.args.get("loc"))).scalars().all()
-    error = {"Not Found": "Sorry, we don't have a cafe at that location"}
     if len(all_cafes) == 0:
-        return jsonify(error=error)
+        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location"}), 404
     elif len(all_cafes) == 1:
-        return jsonify(cafe=all_cafes[0].dictify())
+        return jsonify(cafe=all_cafes[0].dictify()), 200
     else:
-        return jsonify(cafes=[cafe.dictify() for cafe in all_cafes])
+        return jsonify(cafes=[cafe.dictify() for cafe in all_cafes]), 200
 
 ## HTTP POST - Create Record
 
@@ -107,13 +106,38 @@ def add():
         )
     db.session.add(new_cafe)
     db.session.commit()
-    message = {"success": "Successfully added the new cafe"}
+    message = {"success": "Successfully added the new cafe"}, 201
     return jsonify(response=message)
 
 ## HTTP PUT/PATCH - Update Record
 
+@app.route("/update-price/<int:cafe_id>", methods=['PATCH']) # type: ignore
+def update_price(cafe_id):
+    try:
+        cafe_to_update = db.get_or_404(Cafe, cafe_id)
+    except:
+        return jsonify(error={"Not Found": "Sorry, a cafe with that id was not found in the database"}), 404
+    else:
+        cafe_to_update.coffee_price = request.args.get("coffee_price")
+        db.session.commit()
+        return jsonify(response={"success": "Successfully updated the price"}), 200
+
 ## HTTP DELETE - Delete Record
 
+@app.route("/report-closed/<int:cafe_id>", methods=['DELETE']) # type: ignore
+def report_closed(cafe_id):
+    if request.args.get("api-key") == "TopSecretAPIKey":
+        try:
+            cafe_to_delete = db.get_or_404(Cafe, cafe_id) 
+        except:
+            return jsonify(error={"Not Found": "Sorry, a cafe with that id was not found in the database"}), 404
+        else:
+            db.session.delete(cafe_to_delete)
+            db.session.commit()
+            return jsonify(response={"success": "Successfully deleted the cafe"}), 200
+    else:
+        return jsonify(error={"Not Allowed": "Sorry, that's not allowed. Make sure you have the correct api-key"}), 403
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
