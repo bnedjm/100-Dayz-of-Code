@@ -73,6 +73,14 @@ def random():
     #     )
     return jsonify(cafe=random_cafe.dictify())
 
+@app.route("/all", methods=['GET']) # type: ignore
+def all():
+    all_cafes = db.session.execute(db.select(Cafe)).scalars().all()
+    cafes = []
+    for cafe in all_cafes:
+        cafes.append(cafe.dictify())
+    return jsonify(cafes=cafes)
+
 ## HTTP POST - Create Record
 
 ## HTTP PUT/PATCH - Update Record
