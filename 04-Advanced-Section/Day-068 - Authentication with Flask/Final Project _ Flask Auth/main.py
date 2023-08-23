@@ -58,9 +58,12 @@ def logout():
     pass
 
 
-@app.route('/download') # type: ignore
+@app.route('/download', methods=['GET']) # type: ignore
 def download():
-    pass
+    return send_from_directory(
+        directory="static",
+        path="./files/cheat_sheet.pdf"
+    )
 
 
 if __name__ == "__main__":
