@@ -22,10 +22,9 @@ This will install the packages from the requirements.txt for this project.
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-Bootstrap5(app)
-
 app.config['CKEDITOR_PKG_TYPE'] = 'full'
-CKEditor(app)
+ckeditor = CKEditor(app)
+Bootstrap5(app)
 
 # CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
@@ -55,14 +54,14 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit Post')
 
 
-@app.route("/", methods=['GET'])
+@app.route("/")
 def get_all_posts():
     # TODO: Query the database for all the posts. Convert the data to a python list.
     posts = db.session.execute(db.select(BlogPost)).scalars().all()
     return render_template("index.html", all_posts=posts), 200
 
 # TODO: Add a route so that you can click on individual posts.
-@app.route("/post/<int:post_id>", methods=['GET'])
+@app.route("/post/<int:post_id>")
 def show_post(post_id):
     # TODO: Retrieve a BlogPost from the database based on the post_id
     requested_post = db.session.execute(db.select(BlogPost).where(BlogPost.id==post_id)).scalar()
@@ -127,4 +126,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5003)
+    app.run(debug=True, port=5000)
