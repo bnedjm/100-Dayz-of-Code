@@ -3,6 +3,13 @@
 <div class="box">
   <h1>Login</h1>
   <!-- TODO: Use Message Flashing to display feedback to the user with a <p> -->
+  {% with errors = get_flashed_messages() %}
+    {% if errors %}
+      {% for error in errors %}
+          <p class=error>{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   <form action="{{ url_for('login') }}" method="post">
     <input type="text" name="email" placeholder="Email" required="required" />
     <input

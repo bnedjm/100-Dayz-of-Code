@@ -42,7 +42,8 @@ def register():
     if request.method == "POST":
         user = User.query.filter_by(email=request.form["email"]).first()
         if user:
-            return redirect(url_for("register"))
+            error = "You've already registered! Log in instead."
+            return redirect(url_for("login", error=error))
         else:
             new_user = User(
                 email = request.form["email"],
@@ -58,12 +59,20 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = request.args.get("error")
+    if error:
+        flash(error)
     if request.method == "POST":
         user = User.query.filter_by(email=request.form["email"]).first()
         if user:
             if check_password_hash(user.password, request.form["password"]):
                 login_user(user)
                 return redirect(url_for("secrets", name=user.name))
+            error = "Invalid credentials! Please try again."
+            flash(error)
+        else:
+            error = "Email does not exist! Please try again."
+            flash(error)
     return render_template("login.html")
 
 
