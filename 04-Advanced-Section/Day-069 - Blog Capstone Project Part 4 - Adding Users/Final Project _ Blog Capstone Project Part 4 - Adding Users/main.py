@@ -9,7 +9,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 # Import your forms from the forms.py
-from forms import CreatePostForm
+from forms import CreatePostForm, RegisterForm
 
 
 '''
@@ -31,7 +31,11 @@ ckeditor = CKEditor(app)
 Bootstrap5(app)
 
 # TODO: Configure Flask-Login
-
+login_manager = LoginManager()
+login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
@@ -52,16 +56,37 @@ class BlogPost(db.Model):
 
 
 # TODO: Create a User table for all your registered users. 
-
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
 
 with app.app_context():
     db.create_all()
 
 
 # TODO: Use Werkzeug to hash the user's password when creating a new user.
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template("register.html")
+    register_form = RegisterForm()
+    if register_form.validate_on_submit():
+        user = User.query.filter_by(email=register_form.email.data).first()
+        if user:
+            error = "You've already registered! Log in instead."
+            flash(error)
+            return redirect(url_for("login"))
+        else:
+            new_user = User(
+                email = register_form.email.data,
+                password = generate_password_hash(register_form.password.data, method="pbkdf2:sha256", salt_length=8),
+                name = register_form.name.data
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for("get_all_posts"))
+    return render_template("register.html", form=register_form)
+
 
 
 # TODO: Retrieve a user from the database based on their email. 
