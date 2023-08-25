@@ -21,6 +21,13 @@ include "header.html" %}
 <main class="mb-4">
   <div class="container">
     <div class="row">
+      {% with errors = get_flashed_messages() %}
+        {% if errors %}
+          {% for error in errors %}
+              <p class=flash>{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
       <div class="col-lg-8 col-md-10 mx-auto">
         <!--TODO: render your registration form here-->
         {{ render_form(form) }}

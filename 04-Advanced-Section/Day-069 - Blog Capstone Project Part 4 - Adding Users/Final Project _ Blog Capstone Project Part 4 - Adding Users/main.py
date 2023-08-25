@@ -9,7 +9,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 # Import your forms from the forms.py
-from forms import CreatePostForm, RegisterForm
+from forms import CreatePostForm, RegisterForm, LoginForm
 
 
 '''
@@ -84,19 +84,34 @@ def register():
             )
             db.session.add(new_user)
             db.session.commit()
+            login_user(new_user)
             return redirect(url_for("get_all_posts"))
     return render_template("register.html", form=register_form)
 
 
 
 # TODO: Retrieve a user from the database based on their email. 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        try:
+            user = db.session.execute(db.select(User).where(User.email==login_form.email.data)).scalars().all()[0]
+        except:
+            error = "Email does not exist! Please try again."
+            flash(error)
+        else:
+            if check_password_hash(user.password, login_form.password.data):
+                login_user(user)
+                return redirect(url_for("get_all_posts"))
+            error = "Invalid password! Please try again."
+            flash(error)
+    return render_template("login.html", form=login_form)
 
 
 @app.route('/logout')
 def logout():
+    logout_user()
     return redirect(url_for('get_all_posts'))
 
 
