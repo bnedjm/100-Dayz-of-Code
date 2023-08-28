@@ -65,9 +65,9 @@ class BlogPost(db.Model):
     subtitle = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String(250), nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
-
+    author = db.relationship("User", back_populates="blogposts")
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 # TODO: Create a User table for all your registered users. 
 class User(db.Model, UserMixin):
@@ -75,6 +75,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(1000))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
+    blogposts = db.relationship("BlogPost", back_populates="author")
 
 with app.app_context():
     db.create_all()
@@ -154,8 +155,8 @@ def add_new_post():
             subtitle=form.subtitle.data,
             body=form.body.data,
             img_url=form.img_url.data,
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y")
+            date=date.today().strftime("%B %d, %Y"),
+            author=current_user
         )
         db.session.add(new_post)
         db.session.commit()
@@ -172,14 +173,13 @@ def edit_post(post_id):
         title=post.title,
         subtitle=post.subtitle,
         img_url=post.img_url,
-        author=post.author,
         body=post.body
     )
     if edit_form.validate_on_submit():
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
-        post.author = current_user
+        post.author = post.author
         post.body = edit_form.body.data
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
