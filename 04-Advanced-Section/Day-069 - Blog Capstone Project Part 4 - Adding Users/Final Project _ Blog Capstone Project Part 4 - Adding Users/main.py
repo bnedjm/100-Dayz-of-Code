@@ -9,7 +9,7 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 # Import your forms from the forms.py
-from forms import CreatePostForm, RegisterForm, LoginForm
+from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 
 
 '''
@@ -29,6 +29,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ckeditor = CKEditor(app)
 Bootstrap5(app)
+gravatar = Gravatar(app, default='wavatar')
 
 # TODO: Configure Flask-Login
 login_manager = LoginManager()
@@ -68,14 +69,26 @@ class BlogPost(db.Model):
     img_url = db.Column(db.String(250), nullable=False)
     author = db.relationship("User", back_populates="blogposts")
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comments = db.relationship("Comment", back_populates="blogpost")
+
+class Comment(db.Model):
+    __tablename__ = "comments"
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, nullable=False)
+    author = db.relationship("User", back_populates="comments")
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    blogpost = db.relationship("BlogPost", back_populates="comments")
+    blogpost_id = db.Column(db.Integer, db.ForeignKey('blog_posts.id'))
 
 # TODO: Create a User table for all your registered users. 
 class User(db.Model, UserMixin):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     blogposts = db.relationship("BlogPost", back_populates="author")
+    comments = db.relationship("Comment", back_populates="author")
 
 with app.app_context():
     db.create_all()
@@ -138,30 +151,45 @@ def get_all_posts():
 
 
 # TODO: Allow logged-in users to comment on posts
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
+    comment_form = CommentForm()
     requested_post = db.get_or_404(BlogPost, post_id)
-    return render_template("post.html", post=requested_post)
+    if comment_form.validate_on_submit():
+        if current_user.is_authenticated: # type: ignore
+            new_comment = Comment(
+                body = comment_form.comment.data,
+                author = current_user,
+                blogpost = requested_post
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            return redirect(url_for('show_post', post_id=post_id)), 201
+        else:
+            error = "Login required, Please log in."
+            flash(error)
+            return redirect(url_for('login')), 401
+    return render_template("post.html", post=requested_post, form=comment_form)
 
 
 # TODO: Use a decorator so only an admin user can create a new post
 @app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def add_new_post():
-    form = CreatePostForm()
-    if form.validate_on_submit():
+    create_post_form = CreatePostForm()
+    if create_post_form.validate_on_submit():
         new_post = BlogPost(
-            title=form.title.data,
-            subtitle=form.subtitle.data,
-            body=form.body.data,
-            img_url=form.img_url.data,
+            title=create_post_form.title.data,
+            subtitle=create_post_form.subtitle.data,
+            body=create_post_form.body.data,
+            img_url=create_post_form.img_url.data,
             date=date.today().strftime("%B %d, %Y"),
             author=current_user
         )
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html", form=form)
+    return render_template("make-post.html", form=create_post_form)
 
 
 # TODO: Use a decorator so only an admin user can edit a post
