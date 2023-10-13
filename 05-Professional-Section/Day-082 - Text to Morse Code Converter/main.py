@@ -1,4 +1,4 @@
-from art import tprint
+from logo import logo
 
 MORSE_CODE_DICT = {"A":".-",
                    "B":"-...",
@@ -52,7 +52,9 @@ def text_morse_converter(message):
         if char == " ":
             morse_code += " "
             continue
-        morse_code += MORSE_CODE_DICT[char] + " "
+        for key, value in MORSE_CODE_DICT.items():
+            if char == key:
+                morse_code += value + " "
     return morse_code
 
 def morse_text_converter(morse_code):
@@ -67,20 +69,29 @@ def morse_text_converter(morse_code):
                 message += key
     return message
 
-
+def get_user_operation():
+    options = [1, 2, 3]
+    try:
+        user_op = int(input("Which type of conversion do you want to perform?\n1 - text_morse\n2 - morse_text\n3 - Quit\n"))
+        if user_op not in options:
+            print("Invalid input. Try again!\n")
+            get_user_operation()
+    except ValueError:
+        print("Invalid input. Try again!\n")
+        get_user_operation()
+    else:
+        return user_op
+    
 def main():
-    tprint("JUST  MORSE  IT")
-    user_op = int(input("Which type of conversion do you want to perform?\n1 - text_morse\n2 - morse_text\n3 - Quit\n"))
+    print(logo)
+    user_op = get_user_operation()
     while(user_op != 3):
         if user_op == 1:
             user_message = input("Enter the text that you want to convert.\n")
-            print(text_morse_converter(user_message))
+            print(f"The morse code from your text is: {text_morse_converter(user_message)}\n")
         elif user_op == 2:
             user_code = input("Enter the morse code that you want to convert.\n")
-            print(morse_text_converter(user_code))
-        
-        user_op = int(input("What operation do you wanna perform next?\n1 - text_morse\n2 - morse_text\n3 - Quit\n"))
+            print(f"The text from your morse code is: {morse_text_converter(user_code)}\n")
+        user_op = get_user_operation()
 
-# if "__name__" == "__main__":
-#     main()
 main()
