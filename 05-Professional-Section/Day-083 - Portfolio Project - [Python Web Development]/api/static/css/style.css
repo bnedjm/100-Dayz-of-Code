@@ -95,9 +95,9 @@ img {
 
 @media (min-width: 992px) {
     .navbar {
-        min-height: 100vh;
-        width: var(--sidbar-width);
-        background: linear-gradient(rgba(44, 51, 60, 0.8), rgba(44, 51, 60, 0.8)), url(../images/sidebar-img.jpg);
+        /* min-height: 100vh; */
+        /* width: var(--sidbar-width); */
+        /* background: linear-gradient(rgba(44, 51, 60, 0.8), rgba(44, 51, 60, 0.8)), url(../images/sidebar-img.jpg); */
         background-size: cover;
         background-position: center;
     }
@@ -107,9 +107,9 @@ img {
     }
 
     /* CONTENT WRAPPER */
-    #content-wrapper {
+    /* #content-wrapper {
         padding-left: var(--sidbar-width);
-    }
+    } */
 }
 
 /* BTN */
