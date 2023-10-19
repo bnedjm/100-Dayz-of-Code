@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nedjm B. Software Engineer</title>
+    <title>Nedjm | Software Engineer</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="./static/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./static/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./static/images/favicon-16x16.png">
+    <link rel="manifest" href="./static/images/site.webmanifest">
 
     <link rel="stylesheet" href="./static/css/bootstrap.min.css">
     <link rel="stylesheet" href="./static/css/aos.css">
@@ -21,7 +25,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container flex-lg-column">
             <a class="navbar-brand mx-lg-auto mb-lg-4" href="#">
-                <span class="h3 fw-bold d-block d-lg-none">Nedjm</span>
+                <span class="h3 fw-bold d-block d-lg-none">Nedjm | Software Engineer</span>
                 <img src="./static/images/person.jpg" class="d-none d-lg-block rounded-circle" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -43,12 +47,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
+                    <!-- 
                     <li class="nav-item">
                         <a class="nav-link" href="#reviews">Reviews</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#blog">Blog</a>
                     </li>
+                     -->
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
@@ -288,6 +294,7 @@
         <!-- //ABOUT -->
 
         <!-- REVIEWS -->
+        <!--
         <section id="reviews" class="full-height px-lg-5">
             <div class="container">
 
@@ -361,9 +368,11 @@
 
             </div>
         </section>
+        -->
         <!-- //REVIEWS -->
 
         <!-- BLOG -->
+        <!--
         <section id="blog" class="full-height px-lg-5">
             <div class="container">
 
@@ -419,6 +428,7 @@
 
             </div>
         </section>
+        -->
         <!-- //BLOG -->
 
         <!-- CONTACT -->
@@ -433,18 +443,18 @@
                     </div>
 
                     <div class="col-lg-8" data-aos="fade-up" data-aos-delay="300">
-                        <form action="#" class="row g-lg-3 gy-3">
+                        <form action="{{url_for('/')}}" class="row g-lg-3 gy-3"  method="post">
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control" placeholder="Enter your name">
+                                <input type="text" name="name" class="form-control" placeholder="Enter your name">
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="email" class="form-control" placeholder="Enter your email">
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email">
                             </div>
                             <div class="form-group col-12">
-                                <input type="text" class="form-control" placeholder="Enter subject">
+                                <input type="text" name="subject" class="form-control" placeholder="Enter subject">
                             </div>
                             <div class="form-group col-12">
-                                <textarea name="" rows="4" class="form-control" placeholder="Enter your message"></textarea>
+                                <textarea name="message" rows="4" class="form-control" placeholder="Enter your message"></textarea>
                             </div>
                             <div class="form-group col-12 d-grid">
                                 <button type="submit" class="btn btn-brand">Contact me</button>
