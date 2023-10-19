@@ -16,19 +16,19 @@ def home():
     if request.method == "GET":
         return render_template("index.html"), 200
     elif request.method == "POST":
-        subject = "New Contact request"
         data = request.form
-        quote = f"Name: {data['name']}\nEmail: {data['email']}\nPhone: {data['phone']}\nMessage: {data['message']}"
-        with SMTP("smtp.gmail.com", port=587) as connect:
-            connect.starttls()
-            connect.login(user=EMAIL_SENDER, password=APP_PASSWORD) # type: ignore
-            connect.sendmail(
-                from_addr=EMAIL_SENDER, # type: ignore
-                to_addrs=EMAIL_LIST, # type: ignore
-                msg=f"Subject: {subject}\n\n"
-                    f"{quote}"
-            )
-        return render_template("index.html"), 200
+        print(f"{data['name']}\n{data['email']}\n{data['subject']}\n{data['message']}")
+        # quote = f"Name: {data['name']}\nEmail: {data['email']}\nPhone: {data['phone']}\nMessage: {data['message']}"
+        # with SMTP("smtp.gmail.com", port=587) as connect:
+        #     connect.starttls()
+        #     connect.login(user=EMAIL_SENDER, password=APP_PASSWORD) # type: ignore
+        #     connect.sendmail(
+        #         from_addr=EMAIL_SENDER, # type: ignore
+        #         to_addrs=EMAIL_LIST, # type: ignore
+        #         msg=f"Subject: {}\n\n"
+        #             f"{quote}"
+        #     )
+        return render_template("index.html"), 201
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

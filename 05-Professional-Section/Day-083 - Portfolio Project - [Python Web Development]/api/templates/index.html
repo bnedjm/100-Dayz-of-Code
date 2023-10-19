@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% from "bootstrap5/form.html" import render_form %}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nedjm | Software Engineer</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="./static/images/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./static/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./static/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./static/images/favicon-16x16.png">
-    <link rel="manifest" href="./static/images/site.webmanifest">
 
-    <link rel="stylesheet" href="./static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./static/css/aos.css">
-    <link rel="stylesheet" href="./static/css/line-awesome.min.css">
-    <link rel="stylesheet" href="./static/css/style.css">
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
+
+    {{ bootstrap.load_css() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/line-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar">
@@ -73,7 +76,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-10">
-                        <h1 class="display-4 fw-bold" data-aos="fade-up">I'M A <span class="text-brand">SOFTWARE ENGINEER</span> FROM POZNAN, POLAND</h1>
+                        <h1 class="display-4 fw-bold" data-aos="fade-up">I'M A <span class="text-brand">SOFTWARE ENGINEER</span><br>FROM POZNAN, POLAND</h1>
                         <p class="lead mt-2 mb-4" data-aos="fade-up" data-aos-delay="300">I am Nedjm, And I turn coffee into code with a passion for crafting efficient software solutions.</p>
                         <div data-aos="fade-up" data-aos-delay="600">
                             <a href="#work" class="btn btn-brand me-3">Explore My Work</a>
@@ -442,7 +445,7 @@
                     </div>
 
                     <div class="col-lg-8" data-aos="fade-up" data-aos-delay="300">
-                        <form action="{{url_for('home')}}" class="row g-lg-3 gy-3"  method="post">
+                        <form action="{{url_for('home')+"#contact"}}" class="row g-lg-3 gy-3"  method="post">
                             <div class="form-group col-md-6">
                                 <input type="text" name="name" class="form-control" placeholder="Enter your name">
                             </div>
@@ -492,9 +495,9 @@
 
 
 
-    <script src="./static/js/bootstrap.bundle.min.js"></script>
-    <script src="./static/js/aos.js"></script>
-    <script src="./static/js/main.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
