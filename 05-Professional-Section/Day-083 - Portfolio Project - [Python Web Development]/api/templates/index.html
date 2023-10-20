@@ -453,7 +453,7 @@
                     </div>
 
                     <div class="col-lg-8" data-aos="fade-up" data-aos-delay="300">
-                        <form action="{{url_for('home')+"#contact"}}" class="row g-lg-3 gy-3"  method="post">
+                        <!-- <form action="{{ url_for('home') }}" class="row g-lg-3 gy-3"  method="post">
                             <div class="form-group col-md-6">
                                 <input type="text" name="name" class="form-control" placeholder="Enter your name">
                             </div>
@@ -469,7 +469,8 @@
                             <div class="form-group col-12 d-grid">
                                 <button type="submit" class="btn btn-brand">Contact me</button>
                             </div>
-                        </form>
+                        </form> -->
+                        {{ render_form(form) }}
                     </div>
                 </div>
 
