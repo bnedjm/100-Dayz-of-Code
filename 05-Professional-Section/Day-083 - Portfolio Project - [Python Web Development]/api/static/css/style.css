@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&family=Sacramento&family=Space+Grotesk:wght@400;500;600&display=swap');
 
 :root {
     --color-body: #bec8d0;
@@ -8,7 +8,7 @@
     --color-brand: #f5ba17;
     --color-brand2: #eb8c0e;
     --sidbar-width: 240px;
-    --font-base: "Bai Jamjuree";
+    --font-base: "Space Grotesk";
 }
 
 body {
@@ -20,6 +20,10 @@ body {
 h1,h2,h3,h4,h5,h6 {
     color: var(--color-heading);
     font-weight: 700;
+}
+
+.spaced-span {
+    letter-spacing: 2px;
 }
 
 a {
@@ -80,7 +84,7 @@ img {
 }
 
 .navbar .nav-link {
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--color-heading);
 }
@@ -93,6 +97,24 @@ img {
     color: var(--color-brand);
 }
 
+.navbar .navbar-toggler {
+    margin-left: auto;
+}
+
+/* .navbar .navbar-collapse {
+    display: none;
+}
+
+.navbar:hover .navbar-collapse {
+    display: block;
+} */
+
+.navbar-brand {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-heading);
+}
+
 @media (min-width: 992px) {
     .navbar {
         /* min-height: 100vh; */
@@ -100,10 +122,6 @@ img {
         /* background: linear-gradient(rgba(44, 51, 60, 0.8), rgba(44, 51, 60, 0.8)), url(../images/sidebar-img.jpg); */
         background-size: cover;
         background-position: center;
-    }
-
-    .navbar-brand img {
-        border: 8px solid var(--color-brand);
     }
 
     /* CONTENT WRAPPER */
@@ -133,7 +151,8 @@ img {
 
 .link-custom {
     font-weight: 700;
-    position: relative;
+    position: absolute;
+    margin: 12px 0;
 }
 
 .link-custom::after {
