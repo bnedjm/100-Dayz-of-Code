@@ -7,9 +7,8 @@ import os
 
 
 # ENV VARS
-EMAIL_SENDER = os.environ.get("EMAIL_SENDER")
+EMAIL = os.environ.get("EMAIL_SENDER")
 APP_PASSWORD = os.environ.get("APP_PASSWORD")
-EMAIL_LIST = os.environ.get("EMAIL_LIST")
 
 # FLASK APP
 app = Flask(__name__)
@@ -33,18 +32,17 @@ with app.app_context():
     db.create_all()
 
 # FUNCs
-def notify(request):
-    # quote = f"Name: {data['name']}\nEmail: {data['email']}\nPhone: {data['phone']}\nMessage: {data['message']}"
-    # with SMTP("smtp.gmail.com", port=587) as connect:
-    #     connect.starttls()
-    #     connect.login(user=EMAIL_SENDER, password=APP_PASSWORD) # type: ignore
-    #     connect.sendmail(
-    #         from_addr=EMAIL_SENDER, # type: ignore
-    #         to_addrs=EMAIL_LIST, # type: ignore
-    #         msg=f"Subject: {}\n\n"
-    #             f"{quote}"
-    #     )
-    pass
+def notify(request : Contacts):
+    notification = f"Subject: {request.id} | {request.name} | {request.subject}\n\n{request.message}"
+    requester_email = request.email
+    with SMTP("smtp.gmail.com", port=587) as connect:
+        connect.starttls()
+        connect.login(user=EMAIL, password=APP_PASSWORD) # type: ignore
+        connect.sendmail(
+            from_addr=EMAIL, # type: ignore
+            to_addrs=requester_email, # type: ignore
+            msg=notification
+        )
 
 # ROUTES
 @app.route("/", methods=["GET", "POST"]) # type: ignore
