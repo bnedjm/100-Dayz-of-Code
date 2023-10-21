@@ -13,3 +13,34 @@ AOS.init({
   anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
 
 });
+
+// document.addEventListener("DOMContentLoaded", function() {
+//   // Initialize the modal when the page loads
+//   var myModal = new bootstrap.Modal(document.getElementById("ConactModal"));
+
+//   // Show the modal when the button is clicked
+//   document.getElementById("ContactMeBtn").addEventListener("click", function() {
+//       myModal.show();
+//   });
+
+// });
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Initialize the modal when the page loads
+  var myModal = new bootstrap.Modal(document.getElementById("ConactModal"));
+
+  // Check if a flag is set in local storage to determine if the modal should be shown
+  var modalShown = localStorage.getItem('modalShown');
+
+  if (modalShown) {
+      // If the modal hasn't been shown, show it
+      myModal.show();
+
+      // Set a flag in local storage to indicate that the modal has been shown
+      localStorage.setItem('modalShown', 'false');
+  }
+
+  document.getElementById("ContactMeBtn").addEventListener("click", function() {
+      localStorage.setItem('modalShown', 'true');
+  });
+});

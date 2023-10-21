@@ -471,7 +471,7 @@
                                 <!-- <textarea name="message" rows="4" class="form-control" placeholder="Enter your message"></textarea> -->
                             </div>
                             <div class="form-group col-12 d-grid">
-                                {{ form.submit(class="btn btn-brand") }}
+                                {{ form.submit(class="btn btn-brand", id="ContactMeBtn") }}
                                 <!-- <button type="submit" class="btn btn-brand">Contact me</button> -->
                             </div>
                         </form>
@@ -481,6 +481,35 @@
             </div>
         </section>
         <!-- //CONTACT -->
+
+        <!-- MODAL -->
+        <div class="modal fade" id="ConactModal">
+            <!-- {% if status %}
+                data-bs-toggle="modal"
+            {% endif %}> -->
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+            
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Thank you for reaching out!</h4>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    </div>
+                
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>Your contact request has been received. I will get back to you as soon as possible. In the meantime, I invite you to check my work.</p>
+                    </div>
+                
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-brand col-12" data-bs-dismiss="modal">Explore My Work</button>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+        <!-- //MODAL -->
 
         <!-- FOOTER -->
         <footer class="py-5 px-lg-5">

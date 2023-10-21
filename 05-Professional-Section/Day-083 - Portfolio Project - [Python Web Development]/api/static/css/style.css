@@ -205,6 +205,19 @@ img {
     height: 44px;
 }
 
+/* MODAL */
+.modal-content {
+    background-color: var(--color-base);
+    border-color: var(--color-base);
+    color: var(--color-body);
+    margin: 1px 1px;
+}
+
+.modal-content:focus {
+    border-color: var(--color-brand);
+    box-shadow: none;
+}
+
 /* SOCIAL ICONS */
 .social-icons {
 
