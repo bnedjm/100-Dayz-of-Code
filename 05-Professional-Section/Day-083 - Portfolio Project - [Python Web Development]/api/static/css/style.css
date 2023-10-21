@@ -205,6 +205,12 @@ img {
     height: 44px;
 }
 
+#contact .errors {
+    color: var(--color-brand2);
+    margin: 1px 1px;
+    padding: 6px 12px;
+}
+
 /* MODAL */
 .modal-content {
     background-color: var(--color-base);

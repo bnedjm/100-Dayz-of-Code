@@ -61,7 +61,11 @@ def home():
         return redirect(url_for("home")+"#work"), 201 # type: ignore
 
     elif request.method == "POST":
-        return redirect(url_for("home")+"#contact"), 303
+
+        # flash(error)
+        # return redirect(url_for("home")+"#contact"), 303
+        return render_template("index.html", form=contact_form), 303
+
     
     return render_template("index.html", form=contact_form), 200
 
