@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from smtplib import SMTP
 import os
@@ -56,6 +56,7 @@ def home():
         db.session.add(new_contact_request)
         db.session.commit()
         return redirect(url_for("home")), 201
+
     return render_template("index.html", form=contact_form), 200
 
 if __name__ == "__main__":
