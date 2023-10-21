@@ -454,15 +454,15 @@
                     <div class="col-lg-8" data-aos="fade-up" data-aos-delay="300">
                         <form action="{{ url_for('home') }}" class="row g-lg-3 gy-3"  method="post" novalidate>
                             {{ form.csrf_token }}
-                            {% if form.errors %}
-                            <div class="form-group col-12">
-                                {% if "Invalid email address." not in form.email.errors %}
-                                    <p class="errors">All fields must be filled.</p>
-                                {% else %}
-                                    <p class="errors">Invalid email address.</p>
-                                {% endif %} 
-                            </div>
-                            {% endif %}
+
+                            {% with error = get_flashed_messages() %}
+                                {% if error %}
+                                <div class="form-group col-12">
+                                    <p class="errors">{{ error[0] }}</p>
+                                </div>
+                                {% endif %}
+                            {% endwith %}
+
                             <div class="form-group col-md-6">
                                 {{ form.name(class="form-control input_custom", placeholder="Enter your name") }}
                                 <!-- <input type="text" name="name" class="form-control" placeholder="Enter your name"> -->

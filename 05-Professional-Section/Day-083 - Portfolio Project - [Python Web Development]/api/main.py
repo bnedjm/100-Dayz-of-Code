@@ -61,11 +61,12 @@ def home():
         return redirect(url_for("home")+"#work"), 201 # type: ignore
 
     elif request.method == "POST":
-
-        # flash(error)
-        # return redirect(url_for("home")+"#contact"), 303
-        return render_template("index.html", form=contact_form), 303
-
+        if "Invalid email address." not in contact_form.email.errors:
+            error = "All fields must be filled"
+        else:
+            error = "Invalid email address"
+        flash(error)
+        return redirect(url_for("home")+"#contact"), 303
     
     return render_template("index.html", form=contact_form), 200
 
