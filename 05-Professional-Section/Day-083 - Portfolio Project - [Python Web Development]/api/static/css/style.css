@@ -188,6 +188,8 @@ img {
     background-color: var(--color-base);
     border-color: var(--color-base);
     color: var(--color-body);
+    margin: 1px 1px;
+    padding: 6px 12px;
 }
 
 #contact .form-control:focus {
@@ -199,7 +201,7 @@ img {
     color: var(--color-body);
 }
 
-#contact input.form-control {
+#contact .input_custom {
     height: 44px;
 }
 
