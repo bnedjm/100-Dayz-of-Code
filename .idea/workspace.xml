@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c08a3df8-879b-4ff6-bf6e-d72d1e9701fd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/05-Professional-Section/Day-083 - Portfolio Project - [Python Web Development]/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/05-Professional-Section/Day-083 - Portfolio Project - [Python Web Development]/api/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05-Professional-Section/Day-083 - Portfolio Project - [Python Web Development]/api/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/05-Professional-Section/Day-083 - Portfolio Project - [Python Web Development]/api/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05-Professional-Section/Day-083 - Portfolio Project - [Python Web Development]/api/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/05-Professional-Section/Day-083 - Portfolio Project - [Python Web Development]/api/templates/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2X88D5Xxf77Kq4EWFIqUepH9dpa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/boukh/OneDrive/Bureau/Study/Self_Dev/Python"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c08a3df8-879b-4ff6-bf6e-d72d1e9701fd" name="Changes" comment="" />
+      <created>1697999228998</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697999228998</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

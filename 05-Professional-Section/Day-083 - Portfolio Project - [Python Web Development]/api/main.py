@@ -1,14 +1,18 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.datastructures  import MultiDict
 from forms import ContactForm
 from smtplib import SMTP
+from dotenv import load_dotenv
 import os
 
 
 # ENV VARS
-EMAIL = os.environ.get("EMAIL_SENDER")
+load_dotenv(".env")
+EMAIL = os.environ.get("EMAIL")
 APP_PASSWORD = os.environ.get("APP_PASSWORD")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
 
 # FLASK APP
 app = Flask(__name__)
@@ -32,8 +36,19 @@ with app.app_context():
     db.create_all()
 
 # FUNCs
-def notify(request : Contacts):
-    notification = f"Subject: {request.id} | {request.name} | {request.subject}\n\n{request.message}"
+def notify_admin(request : Contacts):
+    notification = f"Subject: {request.id:04d} | {request.name} | {request.subject}\n\n{request.message}"
+    with SMTP("smtp.gmail.com", port=587) as connect:
+        connect.starttls()
+        connect.login(user=EMAIL, password=APP_PASSWORD) # type: ignore
+        connect.sendmail(
+            from_addr=EMAIL, # type: ignore
+            to_addrs=ADMIN_EMAIL, # type: ignore
+            msg=notification
+        )
+
+def notify_requester(request : Contacts):
+    notification = f"Subject: {request.id:04d} | Thank you for reaching out!\n\nYour contact request has been received. I will get back to you as soon as possible. In the meantime, I invite you to check my work."
     requester_email = request.email
     with SMTP("smtp.gmail.com", port=587) as connect:
         connect.starttls()
@@ -48,6 +63,7 @@ def notify(request : Contacts):
 @app.route("/", methods=["GET", "POST"]) # type: ignore
 def home():
     contact_form = ContactForm()
+
     if contact_form.validate_on_submit():
         new_contact_request = Contacts(
             name = contact_form.name.data,
@@ -56,18 +72,25 @@ def home():
             message = contact_form.message.data
         ) # type: ignore
         db.session.add(new_contact_request)
-        notify(new_contact_request)
         db.session.commit()
-        return redirect(url_for("home")+"#work"), 201 # type: ignore
+        notify_admin(new_contact_request)
+        notify_requester(new_contact_request)
+        return redirect(url_for("home")), 201 # type: ignore
 
-    elif request.method == "POST":
+    elif contact_form.is_submitted() and not contact_form.validate():
         if "Invalid email address." not in contact_form.email.errors:
             error = "All fields must be filled"
         else:
             error = "Invalid email address"
         flash(error)
+        session["contactFormData"] = request.form
         return redirect(url_for("home")+"#contact"), 303
     
+    contactFormData = session.get("contactFormData", None)
+    if contactFormData:
+        contact_form = ContactForm(MultiDict(contactFormData))
+        contact_form.validate()
+        session.pop("contactFormData")
     return render_template("index.html", form=contact_form), 200
 
 
