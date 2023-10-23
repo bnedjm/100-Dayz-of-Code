@@ -14,42 +14,7 @@ AOS.init({
 
 });
 
-// document.addEventListener("DOMContentLoaded", function() {
-//   // Initialize the modal when the page loads
+// function showModal() {
 //   var myModal = new bootstrap.Modal(document.getElementById("ConactModal"));
-
-//   // Show the modal when the button is clicked
-//   document.getElementById("ContactMeBtn").addEventListener("click", function() {
-//       myModal.show();
-//   });
-
-// });
-
-// to be fixed | it triggers the modal with every load >> trigger only when submitted correctly
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   // Initialize the modal when the page loads
-//   var myModal = new bootstrap.Modal(document.getElementById("ConactModal"));
-
-//   // Check if a flag is set in local storage to determine if the modal should be shown
-//   var modalShown = localStorage.getItem('modalShown');
-
-//   if (modalShown) {
-//       // If the modal hasn't been shown, show it
-//       myModal.show();
-
-//       // Set a flag in local storage to indicate that the modal has been shown
-//       localStorage.setItem('modalShown', 'false');
-//   }
-
-//   document.getElementById("ContactMeBtn").addEventListener("click", function() {
-//       localStorage.setItem('modalShown', 'true');
-//   });
-// });
-
-// to be fixed | modal button does not work 
-
-// document.getElementById("workLink").addEventListener("click", function(event) {
-//   event.preventDefault(); // Prevent the default link behavior
-//   document.getElementById("work").scrollIntoView({ behavior: "smooth" });
-// });
+//   myModal.show();
+// }

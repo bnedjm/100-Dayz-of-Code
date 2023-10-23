@@ -37,7 +37,7 @@ with app.app_context():
 
 # FUNCs
 def notify_admin(request : Contacts):
-    notification = f"Subject: {request.id:04d} | {request.name} | {request.subject}\n\n{request.message}"
+    notification = f"Subject: #{request.id:04d} | {request.name} | {request.subject}\n\n{request.message}"
     with SMTP("smtp.gmail.com", port=587) as connect:
         connect.starttls()
         connect.login(user=EMAIL, password=APP_PASSWORD) # type: ignore
@@ -48,7 +48,7 @@ def notify_admin(request : Contacts):
         )
 
 def notify_requester(request : Contacts):
-    notification = f"Subject: {request.id:04d} | Thank you for reaching out!\n\nYour contact request has been received. I will get back to you as soon as possible. In the meantime, I invite you to check my work."
+    notification = f"Subject: #{request.id:04d} | Thank you for reaching out!\n\nYour contact request has been received. I will get back to you as soon as possible. In the meantime, I invite you to check my work."
     requester_email = request.email
     with SMTP("smtp.gmail.com", port=587) as connect:
         connect.starttls()
@@ -75,6 +75,7 @@ def home():
         db.session.commit()
         notify_admin(new_contact_request)
         notify_requester(new_contact_request)
+        # session["showModal"] = True
         return redirect(url_for("home")), 201 # type: ignore
 
     elif contact_form.is_submitted() and not contact_form.validate():

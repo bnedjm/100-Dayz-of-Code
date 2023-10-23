@@ -452,31 +452,31 @@
                     </div>
 
                     <div class="col-lg-8" data-aos="fade-up" data-aos-delay="300">
-                        <form action="{{ url_for('home') }}" class="row g-lg-3 gy-3"  method="post" novalidate>
+                        <form action="{{ url_for('home') }}" class="row g-lg-3 gy-3"  method="post">
                             {{ form.csrf_token }}
 
                             {% with error = get_flashed_messages() %}
                                 {% if error %}
-                                <div class="form-group col-12">
-                                    <p class="errors">{{ error[0] }}</p>
-                                </div>
+                                    <div class="form-group col-12">
+                                        <p class="errors">{{ error[0] }}</p>
+                                    </div>
                                 {% endif %}
                             {% endwith %}
 
                             <div class="form-group col-md-6">
-                                {{ form.name(class="form-control input_custom", placeholder="Enter your name") }}
+                                {{ form.name(class="form-control input_custom", placeholder="Enter your name", required="true") }}
                                 <!-- <input type="text" name="name" class="form-control" placeholder="Enter your name"> -->
                             </div>
                             <div class="form-group col-md-6">
-                                {{ form.email(class="form-control input_custom", placeholder="Enter your email") }}
+                                {{ form.email(class="form-control input_custom", placeholder="Enter your email", required="true", pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$") }}
                                 <!-- <input type="email" name="email" class="form-control" placeholder="Enter your email"> -->
                             </div>
                             <div class="form-group col-12">
-                                {{ form.subject(class="form-control input_custom", placeholder="Enter subject") }}
+                                {{ form.subject(class="form-control input_custom", placeholder="Enter subject", required="true") }}
                                 <!-- <input type="text" name="subject" class="form-control" placeholder="Enter subject"> -->
                             </div>
                             <div class="form-group col-12">
-                                {{ form.message(rows="4", class="form-control", placeholder="Enter your message") }}
+                                {{ form.message(rows="4", class="form-control", placeholder="Enter your message", required="true") }}
                                 <!-- <textarea name="message" rows="4" class="form-control" placeholder="Enter your message"></textarea> -->
                             </div>
                             <div class="form-group col-12 d-grid">
@@ -493,9 +493,6 @@
 
         <!-- MODAL -->
         <div class="modal fade" id="ConactModal">
-            <!-- {% if status %}
-                data-bs-toggle="modal"
-            {% endif %}> -->
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
             
@@ -546,6 +543,7 @@
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 </body>
 
 </html>
