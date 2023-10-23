@@ -224,18 +224,18 @@ img {
     box-shadow: none;
 }
 
-/* SOCIAL ICONS */
+/* FOOTER */
 .social-icons {
 
 }
 
 .social-icons a {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background-color: var(--color-base);
-    border-radius: 100px;
+    border-radius: 0.375rem;
     font-size: 24px;
 }

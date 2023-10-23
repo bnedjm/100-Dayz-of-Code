@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from werkzeug.datastructures  import MultiDict
 from forms import ContactForm
 from smtplib import SMTP
@@ -63,7 +64,7 @@ def notify_requester(request : Contacts):
 @app.route("/", methods=["GET", "POST"]) # type: ignore
 def home():
     contact_form = ContactForm()
-
+    current_year = datetime.today().year
     if contact_form.validate_on_submit():
         new_contact_request = Contacts(
             name = contact_form.name.data,
@@ -92,7 +93,7 @@ def home():
         contact_form = ContactForm(MultiDict(contactFormData))
         contact_form.validate()
         session.pop("contactFormData")
-    return render_template("index.html", form=contact_form), 200
+    return render_template("index.html", form=contact_form, year=current_year), 200
 
 
 if __name__ == "__main__":
