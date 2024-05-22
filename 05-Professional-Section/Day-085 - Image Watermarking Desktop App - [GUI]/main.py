@@ -6,7 +6,7 @@ from PIL import Image
 
 # define all ctss
 PATH_INPUT = "05-Professional-Section/Day-085 - Image Watermarking Desktop App - [GUI]/input"
-PATH_OUTPUT = ""
+PATH_OUTPUT = "05-Professional-Section/Day-085 - Image Watermarking Desktop App - [GUI]/output"
 
 # get input images from input folder
 def get_input_images(path: str):
@@ -20,14 +20,21 @@ def get_input_images(path: str):
     return images
 
 # process the images
-images = get_input_images(PATH_INPUT)
+def watermark_images(images: list):
+    pass
 
-for _ in images:
-    _.show()
-
-print(len(images))
 # write the result in the output folder
+def save_output_images(image: Image, path: str, image_name: str): # type: ignore
+    dest_path = os.path.join(path, f"{image_name}.jpeg")
+    image.save(dest_path) # type: ignore
 
 # other functionalities
 
 # main function
+images = get_input_images(PATH_INPUT)
+
+for _ in images:
+    # _.show()
+    save_output_images(_, PATH_OUTPUT, f"output_{images.index(_)}")
+
+print(len(images))
