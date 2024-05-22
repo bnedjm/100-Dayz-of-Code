@@ -1,6 +1,6 @@
 import os
 from PIL import Image
-import time
+# import time
 
 PATH_INPUT = "05-Professional-Section/Day-085 - Image Watermarking Desktop App - [GUI]/input"
 PATH_OUTPUT = "05-Professional-Section/Day-085 - Image Watermarking Desktop App - [GUI]/output"
@@ -43,8 +43,7 @@ def main():
         watermarked_image = watermark_image(image, watermark) # type: ignore
         save_output_image(watermarked_image, PATH_OUTPUT, f"wm_output_{images.index(image)}")
         print(f"- Image no. {images.index(image)+1} has been watermarked successfuly!")
-        print(images.index(image))
-        time.sleep(1)
+        # time.sleep(1)
 
 if __name__ == "__main__":
     main()
