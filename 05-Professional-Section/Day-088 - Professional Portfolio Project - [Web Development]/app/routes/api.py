@@ -3,19 +3,14 @@ from flask_httpauth import HTTPTokenAuth
 from random import choice
 from app import db
 from app.models import Cafe
+from app.utils.helper import get_api_keys
 
 api_bp = Blueprint("api", __name__)
 auth = HTTPTokenAuth(scheme="ApiKey")
 
-# Example API key store
-api_keys = {
-    "your_api_key_1": "user1",
-    "your_api_key_2": "user2",
-    # Add more keys as needed
-}
-
 @auth.verify_token
 def verify_api_key(api_key):
+    api_keys = get_api_keys()
     if api_key in api_keys:
         return api_keys[api_key]
     return None
