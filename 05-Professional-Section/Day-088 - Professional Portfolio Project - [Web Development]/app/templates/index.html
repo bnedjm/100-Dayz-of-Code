@@ -1,11 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cafe&Wifi API</title>
-</head>
-<body>
-    <h1>Welcome to the Cafe & Wifi API</h1>
-    <a href="https://documenter.getpostman.com/view/28410677/2s9Y5VTPPD">Link to documentation</a>
-</body>
-</html>
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/home-bg.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>Cafe & Wifi</h1>
+          <span class="subheading">Your Workspace Best Friend</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      
+      <!-- Cafe preview-->
+      {% for cafe in all_cafes %}
+      <div class="cafe-preview" style="background-image: url(cafe.img_url);">
+        <a href="{{ url_for('web.show', cafe_id=cafe.id) }}">
+          <h2 class="cafe-name">{{ cafe.name }}</h2>
+          <h3 class="cafe-location">{{ cafe.location }}</h3>
+        </a>
+      </div>
+
+      <!-- Divider-->
+      <hr class="my-4" />
+      {% endfor %}
+
+      <!-- New Cafe -->
+      <div class="d-flex justify-content-end mb-4">
+        <a
+          class="btn btn-primary float-right"
+          href="{{ url_for('web.add') }}"
+          >Add Cafe!</a
+        >
+      </div>
+
+      <!-- Pager-->
+      <div class="d-flex justify-content-end mb-4">
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
