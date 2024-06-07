@@ -1,3 +1,7 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, URL, Length
+from flask_ckeditor import CKEditor, CKEditorField
 from app import db
 
 # APIKey | TBD
@@ -31,3 +35,16 @@ class Cafe(db.Model):
 
     def dictify(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+    
+class AddCafe(FlaskForm):
+    name = StringField('Cafe Name', validators=[DataRequired(), Length(max=250)])
+    map_url = StringField('Map URL', validators=[DataRequired(), Length(max=500), URL()])
+    img_url = StringField('Image URL', validators=[DataRequired(), Length(max=500), URL()])
+    location = StringField('Location', validators=[DataRequired(), Length(max=250)])
+    seats = StringField('Seats', validators=[DataRequired(), Length(max=250)])
+    has_toilet = BooleanField('Has Toilet?', validators=[DataRequired()])
+    has_wifi = BooleanField('Has Wifi?', validators=[DataRequired()])
+    has_sockets = BooleanField('Has Sockets?', validators=[DataRequired()])
+    can_take_calls = BooleanField('Can Take Calls?', validators=[DataRequired()])
+    coffee_price = StringField('Coffee Price', validators=[DataRequired(), Length(max=250)])
+    add_cafe = SubmitField('Add Cafe')
