@@ -33,7 +33,7 @@ def add():
         )
         db.session.add(new_cafe)
         db.session.commit()
-        return redirect(url_for("home")), 201
+        return redirect(url_for("web.home")), 201
     return render_template("add-cafe.html", form=form), 200
 
 @web_bp.route("/delete/<int:cafe_id>")
@@ -41,4 +41,4 @@ def delete(cafe_id):
     cafe_to_delete = db.get_or_404(Cafe, cafe_id) 
     db.session.delete(cafe_to_delete)
     db.session.commit()
-    return redirect(url_for("home")), 204
+    return redirect(url_for("web.home")), 204
