@@ -1,0 +1,66 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{cafe.img_url}}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="cafe-heading">
+          <h1>{{ cafe.name }}</h1>
+          <h2 class="subheading">{{ cafe.location }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Cafe Details -->
+<article>
+    <div class="container px-4 px-lg-5 mb-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">{{ cafe.name }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Location:</strong> <a href="{{ cafe.map_url}}">{{ cafe.location }}</a> <span>&#128205;</span></p>
+                        <p><strong>Seats:</strong> {{ cafe.seats }}</p>
+                        <p><strong>Coffee Price:</strong> {{ cafe.coffee_price }}</p>
+                        <p><strong>Has Toilet?</strong> 
+                            {% if cafe.has_toilet %}
+                                <span>&#9989;</span> <!-- Checkmark -->
+                            {% else %}
+                                <span>&#10060;</span> <!-- Cross -->
+                            {% endif %}
+                        </p>
+                        <p><strong>Has Wifi?</strong> 
+                            {% if cafe.has_wifi %}
+                                <span>&#9989;</span> <!-- Checkmark -->
+                            {% else %}
+                                <span>&#10060;</span> <!-- Cross -->
+                            {% endif %}
+                        </p>
+                        <p><strong>Has Sockets?</strong> 
+                            {% if cafe.has_sockets %}
+                                <span>&#9989;</span> <!-- Checkmark -->
+                            {% else %}
+                                <span>&#10060;</span> <!-- Cross -->
+                            {% endif %}
+                        </p>
+                        <p><strong>Can Take Calls?</strong> 
+                            {% if cafe.can_take_calls %}
+                                <span>&#9989;</span> <!-- Checkmark -->
+                            {% else %}
+                                <span>&#10060;</span> <!-- Cross -->
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+{% include "footer.html" %}
