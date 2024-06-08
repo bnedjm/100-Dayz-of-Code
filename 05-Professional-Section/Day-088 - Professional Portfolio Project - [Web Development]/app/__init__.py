@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap5
+from flask_ckeditor import CKEditor
 from config import Config
 import os
 
@@ -13,6 +14,7 @@ def create_app(config_class=Config):
     app.config['SECRET_KEY'] = SECRET_KEY
 
     db.init_app(app)
+    ckeditor = CKEditor(app)
     Bootstrap5(app)
 
     from app.routes.web import web_bp

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, IntegerField
 from wtforms.validators import DataRequired, URL, Length
-from flask_ckeditor import CKEditor, CKEditorField
+from flask_ckeditor import CKEditorField
 from app import db
 
 
@@ -28,16 +28,32 @@ class ToDoList(db.Model):
 
 # Add Task
 class AddTask(FlaskForm):
-    title = StringField("Title", validators=[DataRequired(), Length(250)])
+    title = StringField("Title", validators=[DataRequired()])
     description = CKEditorField("Description", validators=[DataRequired()])
-    status = StringField("Status", validators=[DataRequired(), Length(250)])
-    starred = BooleanField("Starred?", validators=[DataRequired()])
-    deadline = StringField("Deadline", validators=[DataRequired(), Length(250)])
+    status = StringField("Status", validators=[DataRequired()])
+    starred = BooleanField("Do you want to star this task?")
+    deadline = StringField("Deadline", validators=[DataRequired()])
     add_task = SubmitField("Add Task")
 
 # Add ToDoList
 class AddToDoList(FlaskForm):
-    title = StringField("Title", validators=[DataRequired(), Length(250)])
-    status = StringField("Status", validators=[DataRequired(), Length(250)])
-    deadline = StringField("Deadline", validators=[DataRequired(), Length(250)])
+    title = StringField("Title", validators=[DataRequired()])
+    status = StringField("Status", validators=[DataRequired()])
+    deadline = StringField("Deadline", validators=[DataRequired()])
     add_list = SubmitField("Add List")
+
+# Edit Task
+class EditTask(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    description = CKEditorField("Description", validators=[DataRequired()])
+    status = StringField("Status", validators=[DataRequired()])
+    starred = BooleanField("Do you want to star this task?")
+    deadline = StringField("Deadline", validators=[DataRequired()])
+    add_task = SubmitField("Update Task")
+
+# Edit ToDoList
+class EditToDoList(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    status = StringField("Status", validators=[DataRequired()])
+    deadline = StringField("Deadline", validators=[DataRequired()])
+    add_list = SubmitField("Update List")
