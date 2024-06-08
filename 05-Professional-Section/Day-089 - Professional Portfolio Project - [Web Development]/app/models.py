@@ -26,10 +26,10 @@ class ToDoList(db.Model):
     deadline = db.Column(db.String(250), nullable=False)
     tasks = db.relationship("Task", back_populates="list")
 
-# Add ToDoList
+# Add Task
 class AddTask(FlaskForm):
     title = StringField("Title", validators=[DataRequired(), Length(250)])
-    description = StringField("Description", validators=[DataRequired()])
+    description = CKEditorField("Description", validators=[DataRequired()])
     status = StringField("Status", validators=[DataRequired(), Length(250)])
     starred = BooleanField("Starred?", validators=[DataRequired()])
     deadline = StringField("Deadline", validators=[DataRequired(), Length(250)])

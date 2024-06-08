@@ -25,7 +25,9 @@ def add_list():
     form = AddToDoList()
     if form.validate_on_submit():
         new_list = ToDoList(
-        # TBD
+        title = form.title.data,
+        status = form.status.data,
+        deadline = form.deadline.data
         )
         db.session.add(new_list)
         db.session.commit()
@@ -35,14 +37,18 @@ def add_list():
 # Edit a To-Do List
 @web_bp.route("/list/edit/<int:list_id>", methods=['GET', 'POST'])
 def edit_list(list_id):
-    form = AddToDoList()
+    list_to_edit = db.get_or_404(ToDoList, list_id)
+    form = AddToDoList(
+        title = list_to_edit.title,
+        status = list_to_edit.status,
+        deadline = list_to_edit.deadline
+    )
     if form.validate_on_submit():
-        list_to_edit = db.get_or_404(ToDoList, list_id)
-        list_to_edit = ToDoList(
-            # TBD
-        )
+        list_to_edit.title = form.title.data
+        list_to_edit.status = form.status.data
+        list_to_edit.deadline = form.deadline.data
         db.session.commit()
-        return redirect(url_for("web.home")), 201
+        return redirect(url_for("web.show_list", list_id=list_id)), 201
     return render_template("edit-list.html", form=form), 200
 
 # Delete a To-Do List
@@ -62,12 +68,17 @@ def show_task(task_id):
     return render_template("task.html", task=requested_task), 200
 
 # Add a task to a To-Do List
-@web_bp.route("/task/add", methods=['GET', 'POST'])
-def add_task():
+@web_bp.route("/task/add/<int:task_id_>", methods=['GET', 'POST'])
+def add_task(list_id_):
     form = AddTask()
     if form.validate_on_submit():
         new_task = Task(
-        # TBD
+            title = form.title.data,
+            description = form.description.data,
+            status = form.status.data,
+            starred = form.starred.data,
+            deadline = form.deadline.data,
+            list_id = list_id_
         )
         db.session.add(new_task)
         db.session.commit()
@@ -77,14 +88,22 @@ def add_task():
 # Edit a task in a To-Do List
 @web_bp.route("/task/edit/<int:task_id>", methods=['GET', 'POST'])
 def edit_task(task_id):
-    form = AddTask()
+    task_to_edit = db.get_or_404(Task, task_id)
+    form = AddTask(
+        title = task_to_edit.title.data,
+        description = task_to_edit.description.data,
+        status = task_to_edit.status.data,
+        starred = task_to_edit.starred.data,
+        deadline = task_to_edit.deadline.data
+    )
     if form.validate_on_submit():
-        task_to_edit = db.get_or_404(Task, task_id)
-        task_to_edit = Task(
-            # TBD
-        )
+        task_to_edit.title = form.title.data
+        task_to_edit.description = form.description.data
+        task_to_edit.status = form.status.data
+        task_to_edit.starred = form.starred.data
+        task_to_edit.deadline = form.deadline.data
         db.session.commit()
-        return redirect(url_for("web.home")), 201
+        return redirect(url_for("web.show_task", task_id=task_id)), 201
     return render_template("edit-task.html", form=form), 200
 
 # Delete a task from a To-Do List
