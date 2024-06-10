@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from app.models import ToDoList, Task, AddToDoList, AddTask, EditToDoList, EditTask
 from app import db
-
+from datetime import datetime
 
 web_bp = Blueprint('web', __name__)
 
@@ -38,6 +38,11 @@ def add_list():
 @web_bp.route("/list/edit/<int:list_id>", methods=['GET', 'POST'])
 def edit_list(list_id):
     list_to_edit = db.get_or_404(ToDoList, list_id)
+
+    # Ensure deadline is a datetime.date object
+    if isinstance(list_to_edit.deadline, str):
+        list_to_edit.deadline = datetime.strptime(list_to_edit.deadline, "%Y-%m-%d").date()
+    
     form = EditToDoList(
         title = list_to_edit.title,
         status = list_to_edit.status,
@@ -89,6 +94,11 @@ def add_task(list_id_):
 @web_bp.route("/task/edit/<int:task_id>", methods=['GET', 'POST'])
 def edit_task(task_id):
     task_to_edit = db.get_or_404(Task, task_id)
+
+    # Ensure deadline is a datetime.date object
+    if isinstance(task_to_edit.deadline, str):
+        task_to_edit.deadline = datetime.strptime(task_to_edit.deadline, "%Y-%m-%d").date()
+
     form = EditTask(
         title = task_to_edit.title,
         description = task_to_edit.description,

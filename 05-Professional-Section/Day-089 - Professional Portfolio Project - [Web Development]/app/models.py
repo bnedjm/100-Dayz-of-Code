@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, IntegerField, SelectField, DateField
+from wtforms.fields import StringField, SubmitField, BooleanField, IntegerField, SelectField, DateField
 from wtforms.validators import DataRequired, URL, Length
 from flask_ckeditor import CKEditorField
 from app import db
@@ -33,14 +33,14 @@ class AddTask(FlaskForm):
     description = CKEditorField("Description", validators=[DataRequired()])
     status = SelectField("Status", validators=[DataRequired()], choices=[("Not Started", "Not Started"), ("In Progress", "In Progress"), ("Complete", "Complete")])
     starred = BooleanField("Do you want to star this task?")
-    deadline = DateField("Deadline", format='%Y-%m-%d', default=datetime.now(), validators=[DataRequired()])
+    deadline = DateField("Deadline", format="%Y-%m-%d", default=datetime.now())
     add_task = SubmitField("Add Task")
 
 # Add ToDoList
 class AddToDoList(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     status = SelectField("Status", validators=[DataRequired()], choices=[("Not Started", "Not Started"), ("In Progress", "In Progress"), ("Complete", "Complete")])
-    deadline = DateField("Deadline", format='%Y-%m-%d', default=datetime.now(), validators=[DataRequired()])
+    deadline = DateField("Deadline", format="%Y-%m-%d", default=datetime.now())
     add_list = SubmitField("Add List")
 
 # Edit Task
@@ -49,12 +49,12 @@ class EditTask(FlaskForm):
     description = CKEditorField("Description", validators=[DataRequired()])
     status = SelectField("Status", validators=[DataRequired()], choices=[("Not Started", "Not Started"), ("In Progress", "In Progress"), ("Complete", "Complete")])
     starred = BooleanField("Do you want to star this task?")
-    deadline = DateField("Deadline", format='%Y-%m-%d', default=datetime.now(), validators=[DataRequired()])
+    deadline = DateField("Deadline", format="%Y-%m-%d", default=datetime.now())
     add_task = SubmitField("Update Task")
 
 # Edit ToDoList
 class EditToDoList(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     status = SelectField("Status", validators=[DataRequired()], choices=[("Not Started", "Not Started"), ("In Progress", "In Progress"), ("Complete", "Complete")])
-    deadline = DateField("Deadline", format='%Y-%m-%d', default=datetime.now(), validators=[DataRequired()])
+    deadline = DateField("Deadline", format="%Y-%m-%d", default=datetime.now())
     add_list = SubmitField("Update List")
