@@ -1,0 +1,59 @@
+{% from "bootstrap5/form.html" import render_form %} {% block content %} {%
+    include "header.html" %}
+    
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="background-image: url('../static/assets/img/edit-bg.jpg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              {% if is_edit and is_list: %}
+              <h1>Edit List</h1>
+              {% elif is_edit and not is_list: %}
+              <h1>Edit Task</h1>
+              {% elif not is_edit and is_list: %}
+              <h1>New List</h1>
+              {% else: %}
+              <h1>New Task</h1>
+              {% endif %}
+              <span class="subheading"
+                >You're going to make great acheivements!</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {% if is_list %}
+
+    <main class="mb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {% else %}
+
+    <main class="mb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            {{ ckeditor.load() }} {{ ckeditor.config(name='description') }}
+            {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {% endif %}
+    
+    {% include "footer.html" %} {% endblock %}
+    

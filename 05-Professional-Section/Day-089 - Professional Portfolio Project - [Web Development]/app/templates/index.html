@@ -1,0 +1,52 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/home-bg.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>To-Do List</h1>
+          <span class="subheading">Your Workspace Best Friend</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      
+      <!-- List preview-->
+      {% for list in all_lists %}
+      <div class="list-preview">
+        <a href="{{ url_for('web.show_list', list_id=list.id) }}">
+          <h2 class="list-name">{{ list.title }}</h2>
+          <h4 class="list-status">Status: {{ list.status }}, Due Date: {{ list.deadline}}</h4>
+        </a>
+      </div>
+
+      <!-- Divider-->
+      <hr class="my-4" />
+      {% endfor %}
+
+      <!-- New List -->
+      <div class="d-flex justify-content-end mb-4">
+        <a
+          class="btn btn-primary float-right"
+          href="{{ url_for('web.add_list') }}"
+          >Add List!</a>
+      </div>
+
+      <!-- Pager-->
+      <div class="d-flex justify-content-end mb-4">
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
