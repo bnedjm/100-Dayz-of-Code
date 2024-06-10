@@ -1,0 +1,71 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../static/assets/img/view-bg.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+            {% if is_list %}
+            <h1>{{ list.title }}</h1>
+            <h2 class="subheading">{{ list.status}}</h2>
+            {% else %}
+            <h1>{{ task.title }}</h1>
+            <h2 class="subheading">{{ task.status}}</h2>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            {% if is_list %}
+                {% for task in list.tasks %}
+                    <div class="list-preview">
+                        <a href="{{ url_for('web.show_task', task_id=task.id) }}">
+                        <h2 class="list-name">{{ task.title }}</h2>
+                        <h4 class="list-status">Status: {{ task.status }}, Due Date: {{ task.deadline}}</h4>
+                        </a>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                {% endfor %} 
+                <div class="d-flex justify-content-end mb-4">
+                    <a class="btn btn-primary float-right mx-4"
+                    href="{{ url_for('web.edit_list', list_id=list.id) }}">Edit List!</a>
+                    <a class="btn btn-success float-right"
+                    href="{{ url_for('web.edit_list', list_id=list.id) }}">Complete!</a>
+                </div>
+            {% else %}
+                <div class="card">
+                    <h3 class="card-header">
+                    Task Information 
+                    {% if task.starred %}
+                        <span>&#9733;</span> <!-- Checkmark -->
+                    {% endif %}
+                    </h3>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Title:</strong> {{ task.title }}</p>
+                        <p class="card-text"><strong>Description:</strong> {{ task.description|safe }}</p>
+                        <p class="card-text"><strong>Deadline:</strong> {{ task.deadline }}</p>
+                    
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-primary float-right mx-4"
+                            href="{{ url_for('web.edit_task', task_id=task.id) }}">Edit Task!</a>
+                            <a class="btn btn-success float-right"
+                            href="{{ url_for('web.edit_task', task_id=task.id) }}">Complete!</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+        
+        </div>
+    </div>
+</div>
+
+
+{% include "footer.html" %}

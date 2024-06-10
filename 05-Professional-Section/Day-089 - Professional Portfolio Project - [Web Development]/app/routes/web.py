@@ -17,7 +17,7 @@ def home():
 @web_bp.route("/list/<int:list_id>")
 def show_list(list_id):
     requested_list = db.session.execute(db.select(ToDoList).where(ToDoList.id==list_id)).scalar()
-    return render_template("list.html", list=requested_list), 200
+    return render_template("view.html", list=requested_list, is_list=True), 200
 
 # Add a To-Do List
 @web_bp.route("/list/add", methods=['GET', 'POST'])
@@ -65,7 +65,7 @@ def delete_list(list_id):
 @web_bp.route("/task/<int:task_id>")
 def show_task(task_id):
     requested_task = db.session.execute(db.select(Task).where(Task.id==task_id)).scalar()
-    return render_template("task.html", task=requested_task), 200
+    return render_template("view.html", task=requested_task, is_list=False), 200
 
 # Add a task to a To-Do List
 @web_bp.route("/task/add/<int:list_id_>", methods=['GET', 'POST'])
