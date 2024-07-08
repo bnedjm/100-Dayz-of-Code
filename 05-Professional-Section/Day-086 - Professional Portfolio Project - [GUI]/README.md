@@ -1,4 +1,4 @@
-# A Desktop program where you can upload images and add a watermark.
+#A Tkinter GUI desktop application that tests your typing speed.
 
 TBD: GUI
 
