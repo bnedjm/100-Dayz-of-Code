@@ -1,0 +1,39 @@
+{% include "header.html" %}
+
+<main>
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 p-lg-5 mx-auto my-1">
+          <h1 class="display-4 fw-normal">Color Palette</h1>
+          <p class="lead fw-normal">Helping you get the color palette of your image!</p>
+          <div class="d-flex justify-content-center mb-3">
+            <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+              <label class="form-label text-white m-1" for="customFile1">Choose file</label>
+              <input type="file" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage'); loadColorData();" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="mb-4">
+            <img id="selectedImage" class="img-thumbnail" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" alt="" style="width: 300px; height: 300px;" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div id="colorList1" class="col col_arranged" >
+              <!-- Color list/table will be populated here -->
+            </div>
+            <div id="colorList2" class="col col_arranged" >
+              <!-- Color list/table will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %}

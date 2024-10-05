@@ -1,0 +1,1 @@
+# Image Colour Palette Generator
