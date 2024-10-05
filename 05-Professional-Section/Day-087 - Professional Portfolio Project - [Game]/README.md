@@ -1,4 +1,4 @@
-# A Tkinter GUI desktop application that tests your typing speed.
+# Using Python Turtle, build a clone of the 80s hit game Breakout.
 
 TBD: GUI
 
